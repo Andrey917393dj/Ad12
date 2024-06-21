@@ -20,9 +20,16 @@ local TIMEOUT_THRESHOLD = 10 -- Adjust as needed
 -- Function to find all items (Tools) in the Workspace
 local function FindItems()
     local items = {}
+    local characterPosition = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+    local maxDistance = 100 -- adjust this value to change the search radius
+
     for _, v in pairs(Workspace:GetDescendants()) do
         if v:IsA("Tool") then
-            table.insert(items, v)
+            local itemPosition = v.Position
+            local distance = (characterPosition - itemPosition).magnitude
+            if distance <= maxDistance then
+                table.insert(items, v)
+            end
         end
     end
     return items
