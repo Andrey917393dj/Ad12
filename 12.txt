@@ -31,7 +31,12 @@ end
 -- Function to move character to a given position using pathfinding
 local function MoveToPosition(position)
     local PathfindingService = game:GetService("PathfindingService")
-    local Path = PathfindingService:CreatePath()
+    local Path = PathfindingService:CreatePath({
+        AgentRadius = 2,
+        AgentHeight = 5,
+        AgentCanJump = true,
+        AgentMaxSlope = 45,
+    })
     Path:ComputeAsync(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, position)
     local Waypoints = Path:GetWaypoints()
 
@@ -114,8 +119,6 @@ CreateToggle("Start Farming", "Item Farm", function()
     if StartFarming then
         print("Start farming with method: Legit")
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
-
-        FarmItems()
 
         while StartFarming and task.wait(1) do
             FarmItems()
